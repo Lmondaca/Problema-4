@@ -43,7 +43,9 @@ def escoger_disparo( amenazas ):
     c2 = cuadrante[1]
     c3 = cuadrante[2]
     c4 = cuadrante[3]
-    if   c1 != "0" and (c2 == c3 == c4 == "0"):
+    if   len(amenaza) == 0:
+        disparo_x, disparo_y = "0", "1" # R.I.P
+    elif   c1 != "0" and (c2 == c3 == c4 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "1")
     elif c2 != "0" and (c1 == c3 == c4 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "2")
@@ -51,11 +53,11 @@ def escoger_disparo( amenazas ):
         disparo_x, disparo_y = disparo_seguro(amenaza, "3")
     elif c4 != "0" and (c1 == c2 == c2 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "4")
-    elif len(amenaza) == 0:
-        disparo_x, disparo_y = "0", "1" # R.I.P
+    
     elif (c1 != "0") and (c2 != "0") and (c3 != "0") and (c4 != "0"):
         cuadrante_int = map(int, cuadrante)
         max_cuadrante = max(cuadrante_int)
+        amenaza_int = int(amenaza)
 
 
 
@@ -135,8 +137,70 @@ def periodico(coordenada): #Evita que la posicion que guardamos se "salga" del t
      if coordenada[1] >= Tamanno:
         coordenada[1] = coordenada[1] - Tamanno
     return [coordenada[0], coordenada[1]] 
-def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string, cuadrante con mas enemigos int)  
-
+def disparar(amenaza, cuadrante): #Disparo no 100% real (amenaza_int, max_cuadrante)
+    cuenta = 0
+    amenaza_1 = 0
+    amenaza_2 = 0
+    while cuenta <= len(amenaza):
+        if   amenaza[cuenta] == 1:
+            amenaza_1 += 1
+            cuenta += 1
+        elif amenaza[cuenta] == 2:
+            amenaza_2 += 1
+            cuenta += 1
+        
+    if 3 in amenaza:
+        if cuadrante == 1:
+            disparo_x = "1"
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        elif cuadrante == 2:
+            disparo_x = "0"
+            disparo_y = "-1"
+            return disparo_x, disparo_y
+        elif cuadrante == 3:
+            disparo_x = "-1"
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        else:
+            disparo_x = "0"
+            disparo_y = "1"
+            return disparo_x, disparo_y
+    elif amenaza_2 >= amenaza_1:
+        if   cuadrante == 1:
+            disparo_x = random.choice("3", "2")
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        elif cuadrante == 2:
+            disparo_x = "0"
+            disparo_y = random.choice("-2", "-3")
+            return disparo_x, disparo_y
+        elif cuadrante == 3:
+            disparo_x = random.choice("-2", "-3")
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        else:
+            disparo_x = "0"
+            disparo_y = random.choice("2", "3")
+            return disparo_x, disparo_y
+    else:
+        if   cuadrante == 1:
+            disparo_x = random.choice("5", "4")
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        elif cuadrante == 2:
+            disparo_x = "0"
+            disparo_y = random.choice("-5", "-4")
+            return disparo_x, disparo_y
+        elif cuadrante == 3:
+            disparo_x = random.choice("-5", "-4")
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        else:
+            disparo_x = "0"
+            disparo_y = random.choice("5", "4")
+            return disparo_x, disparo_y
+    
 
 #Si la posicion es 0 o 9 estamos en una esquina
 #en estos puntos distintos cuadrantes y se pierden algunos
