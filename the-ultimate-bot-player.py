@@ -58,6 +58,7 @@ def escoger_disparo( amenazas ):
         cuadrante_int = map(int, cuadrante)
         max_cuadrante = max(cuadrante_int)
         amenaza_int = int(amenaza)
+        disparo_x, disparo_y = disparar(amenaza_int, max_cuadrante)
 
 
 
@@ -219,4 +220,5 @@ def disparar(amenaza, cuadrante): #Disparo no 100% real (amenaza_int, max_cuadra
 ##    - si no hay amenaza, revisar cuadrantes y moverse a donde hay menor cantidad
 ##de enemigos. (intentar no chocar)
 # ocupar la posición inicial para calcular la consentracion de jugadores respecto al area de cada caudrante
+## en concentracion poner un if si el area del cuadrante es 0 -- ZeroDivisionError o simplemente skipearlo
 ## en concentracion poner un if si el area del cuadrante es 0 -- ZeroDivisionError o simplemente skipearlo
