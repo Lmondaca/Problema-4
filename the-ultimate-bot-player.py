@@ -1,9 +1,9 @@
 import numpy
 import random
 from cliente_alumnos import posicion
-global posicionActual
-posicionActual = dict()
+posicionActual = list(posicion) # Lista de enteros
 def escoger_movimiento( amenazas ):
+    global posicionActual # Usar la posicion inicial
     grados,cuadrantes=amenazas.strip().split(':')
     grados=grados.split('-') #el primer elemento es 'a'
     cuadrantes=cuadrantes.split('-')
@@ -25,8 +25,11 @@ def escoger_movimiento( amenazas ):
     elif minc==cuadrantes[3]:
         movimiento_x='1'
     
+    
     movimiento_x = ""
     movimiento_y = ""
+    global posicionActual = [global posicionActual[0]+ int(movimiento_x), global posicionActual[1]+ int(movimiento_y)] # No estoy seguro si el orden x,y está bien puesto
+    global posicionActual = periodico(global posicionActual) 
 return movimiento_x + "," + movimiento_y
 
 def escoger_disparo( amenazas ):
@@ -116,7 +119,13 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
             else:
                 c += 1
     return disparo_x, disparo_y         
-
+def periodico(coordenada): #Evita que la posicion que guardamos se "salga" del tablero, se le da una lista
+    Tamanno = 5 #Se asume que el tamaño del tablero es de 5 pues es 1v1 cambiar para gran final, si no es 1v1 preguntar a los ayudantes
+     if coordenada[0] >= Tamanno:
+        coordenada[0] = coordenada[0] - Tamanno
+     if coordenada[1] >= Tamanno:
+        coordenada[1] = coordenada[1] - Tamanno
+    return [coordenada[0], coordenada[1]] 
 
 
 
