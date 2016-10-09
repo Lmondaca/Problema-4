@@ -1,9 +1,10 @@
 import numpy
 import random
 from cliente_alumnos import posicion
-posicionActual = list(posicion) # Lista de enteros
+global posicionActual = list(posicion) # Lista de enteros
 def escoger_movimiento( amenazas ):
     global posicionActual # Usar la posicion inicial
+    # inserte aqui el area de los cuadrantes o el llamada a funcion del area
     grados,cuadrantes=amenazas.strip().split(':')
     grados=grados.split('-') #el primer elemento es 'a'
     cuadrantes=cuadrantes.split('-')
@@ -126,7 +127,8 @@ def periodico(coordenada): #Evita que la posicion que guardamos se "salga" del t
      if coordenada[1] >= Tamanno:
         coordenada[1] = coordenada[1] - Tamanno
     return [coordenada[0], coordenada[1]] 
-
+def disparar(amenaza, cuadrante):
+# funcion para disparos no 100% real    
 
 
 #Si la posicion es 0 o 9 estamos en una esquina
@@ -146,4 +148,4 @@ def periodico(coordenada): #Evita que la posicion que guardamos se "salga" del t
 ##    - si no hay amenaza, revisar cuadrantes y moverse a donde hay menor cantidad
 ##de enemigos. (intentar no chocar)
 # ocupar la posición inicial para calcular la consentracion de jugadores respecto al area de cada caudrante
-
+## en concentracion poner un if si el area del cuadrante es 0 -- ZeroDivisionError o simplemente skipearlo
