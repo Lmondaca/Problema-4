@@ -10,7 +10,6 @@ def escoger_movimiento( amenazas ):
     cuadrantes=cuadrantes.split('-')
     cuadrantes=map(int, cuadrantes)
     minc=min(cuadrantes)
-
     num_Jugadores = sum(cuadrantes)+1 #Calcula el numero de jugadores para determianr el tamanio del tablero
     if num_Jugadores <= 5:
         Tablero = 11 #Va del 0 al 10
@@ -18,6 +17,7 @@ def escoger_movimiento( amenazas ):
         Tablero = 15 #Va del 0 al 14
     else:
         Tablero = 20 #Va del 0 al 19
+
 
     if minc == cuadrantes[0]:
         if cuadrantes[1]<cuadrantes[2] and cuadrantes[1]<=cuadrantes[0]:
@@ -40,6 +40,7 @@ def escoger_movimiento( amenazas ):
     movimiento_y = ""
     global posicionActual = [global posicionActual[0]+ int(movimiento_x), global posicionActual[1]+ int(movimiento_y)] # No estoy seguro si el orden x,y está bien puesto
     global posicionActual = periodico(global posicionActual, Tablero)
+
     return movimiento_x + "," + movimiento_y
 
 def escoger_disparo( amenazas ):
@@ -47,7 +48,6 @@ def escoger_disparo( amenazas ):
     amenaza = ambos[0].strip().split('-') #Lista de amenzas [g1, g2, g3, gn]
     cuadrante = ambos[1].strip().split('-') #Lista de cuadrantes [c1, c2, c3, c4]    
     del amenaza[0]
-
     num_Jugadores = sum(map(int,cuadrante)) #Calcula el numero de jugadores para determianr el tamanio del tablero
     if num_Jugadores <= 5:
         Tablero = 11 #Va del 0 al 10
@@ -56,16 +56,17 @@ def escoger_disparo( amenazas ):
     else:
         Tablero = 20 #Va del 0 al 19
 
+
     amenaza.sort()
     c1 = cuadrante[0] #Cuadrantes en valores individuales 
     c2 = cuadrante[1]
     c3 = cuadrante[2]
     c4 = cuadrante[3]
-
     
     if len(amenaza) == 0:  #Cambio en el orden, si no hay amenazas no es necesario ver todo lo siguiente
         disparo_x, disparo_y = "0", "1" # R.I.P
     elif c1 != "0" and (c2 == c3 == c4 == "0"):
+
 
         disparo_x, disparo_y = disparo_seguro(amenaza, "1")
     elif c2 != "0" and (c1 == c3 == c4 == "0"):
@@ -73,12 +74,12 @@ def escoger_disparo( amenazas ):
     elif c3 != "0" and (c1 == c2 == c4 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "3")
     elif c4 != "0" and (c1 == c2 == c2 == "0"):
-
         disparo_x, disparo_y = disparo_seguro(amenaza, "4") 
     elif (0 in posicionActual) or ((Tablero-1) in posicionActual):
         disparo_x,disparo_y = bordes(amenaza,Tablero,cuadrante) #La funcion bordes esta en proceso, la subo para que me corrijan si falle
         #dejare las funciones que utiliza mas abajo, luego de las indicaciones que anotamos
     
+
 
     elif (c1 != "0") and (c2 != "0") and (c3 != "0") and (c4 != "0"):
         cuadrante_int = map(int, cuadrante)
@@ -91,7 +92,6 @@ def escoger_disparo( amenazas ):
     return disparo_x + "," + disparo_y
 
 def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amenzas ordenadas, hecho para no poner todo esto en la funcion escoger_disparo
-
     c = 0 #No existia la variable
     ## REVISAR EN CASO DE QUE AMENAZAS NO SE REPITAN
     if cuadrante == "1": # Todos los enemigos estan en cuadrante 1
@@ -104,6 +104,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 elif amenaza[c] == "2":
                     disparo_x = random.choice(["2", "3"])
 
+
                     break
             elif amenaza[c] == "3":
                 disparo_x = "1"
@@ -111,7 +112,6 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
             else:
                 c += 1  
     elif cuadrante == "2": # Todos los enemigos estan en cuadrante 2
-
         while c < len(amenaza):
             if amenaza[c] == amenaza[c+1]:
                 disparo_x = "0"
@@ -121,6 +121,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 elif amenaza[c] == "2":
                     disparo_y = ranodm.choice(["-3", "-2"])
 
+
                     break
             elif amenaza[c] == "3":
                 disparo_y = "-1"
@@ -129,7 +130,6 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
             else:
                 c +=1   
     elif cuadrante == "3": # Todos los enemigos estan en cuadrante 3
-
         while c < len(amenaza):
             if amenaza[c] == amenaza[c+1]:
                 disparo_y = "0"
@@ -139,6 +139,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 elif amenaza[c] == "2":
                     disparo_x = random.choice(["-3", "-2"])
 
+
                     break
             elif amenaza[c] == "3":
                 disparo_x = "-1"
@@ -146,7 +147,6 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
             else:
                 c += 1
     else: #Todos los enemigos estan en cuadrante 4
-
         while c < len(amenaza):
             if amenaza[c] == amenaza[c+1]:
                 disparo_x = "0"
@@ -156,6 +156,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 elif amenaza[c] == "2":
                     disparo_y = random.choice(["2", "3"])
 
+
                     break
             elif amenaza[c] == "3":
                 disparo_y = "1"
@@ -163,8 +164,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     
             else:
                 c += 1
-    return disparo_x, disparo_y         
-
+    return disparo_x, disparo_y
 def periodico(coordenada, Tamanno): #Evita que la posicion que guardamos se "salga" del tablero, se le da una lista
     if coordenada[0] >= Tamanno:
         coordenada[0] = Tamanno - coordenada[0]
@@ -237,6 +237,7 @@ def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string
             return disparo_x, disparo_y
 
 
+
 #Si la posicion es 0 o 9 estamos en una esquina
 #en estos puntos distintos cuadrantes y se pierden algunos
 
@@ -255,8 +256,6 @@ def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string
 ##de enemigos. (intentar no chocar)
 # ocupar la posición inicial para calcular la consentracion de jugadores respecto al area de cada caudrante
 ## en concentracion poner un if si el area del cuadrante es 0 -- ZeroDivisionError o simplemente skipearlo
-
-
 
 ##Esta es mi idea de como podria funcionar el bot al estar en los bordes
 ##Las siguientes funciones hacen lo mismo tecnicamente, X0 se refiere a disparos verticales e
@@ -338,4 +337,5 @@ def bordes(amenaza,Tablero,cuadrante):
                 #se dispara hacia la derecha en caso de que hayan mas enemigos en el cuarto cuadrante
         
     return disparo_x,disparo_y
+
 
