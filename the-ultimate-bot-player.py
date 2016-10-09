@@ -57,6 +57,8 @@ def escoger_disparo( amenazas ):
         Tablero = 20 #Va del 0 al 19
 
 
+
+
     amenaza.sort()
     c1 = cuadrante[0] #Cuadrantes en valores individuales 
     c2 = cuadrante[1]
@@ -66,6 +68,8 @@ def escoger_disparo( amenazas ):
     if len(amenaza) == 0:  #Cambio en el orden, si no hay amenazas no es necesario ver todo lo siguiente
         disparo_x, disparo_y = "0", "1" # R.I.P
     elif c1 != "0" and (c2 == c3 == c4 == "0"):
+
+
 
 
         disparo_x, disparo_y = disparo_seguro(amenaza, "1")
@@ -81,6 +85,8 @@ def escoger_disparo( amenazas ):
     
 
 
+
+
     elif (c1 != "0") and (c2 != "0") and (c3 != "0") and (c4 != "0"):
         cuadrante_int = map(int, cuadrante)
         max_cuadrante = max(cuadrante_int)
@@ -92,6 +98,8 @@ def escoger_disparo( amenazas ):
     return disparo_x + "," + disparo_y
 
 def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amenzas ordenadas, hecho para no poner todo esto en la funcion escoger_disparo
+
+
     c = 0 #No existia la variable
     ## REVISAR EN CASO DE QUE AMENAZAS NO SE REPITAN
     if cuadrante == "1": # Todos los enemigos estan en cuadrante 1
@@ -103,6 +111,8 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break
                 elif amenaza[c] == "2":
                     disparo_x = random.choice(["2", "3"])
+
+
 
 
                     break
@@ -120,6 +130,8 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break
                 elif amenaza[c] == "2":
                     disparo_y = ranodm.choice(["-3", "-2"])
+
+
 
 
                     break
@@ -140,6 +152,8 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     disparo_x = random.choice(["-3", "-2"])
 
 
+
+
                     break
             elif amenaza[c] == "3":
                 disparo_x = "-1"
@@ -155,6 +169,8 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break 
                 elif amenaza[c] == "2":
                     disparo_y = random.choice(["2", "3"])
+
+
 
 
                     break
@@ -257,6 +273,7 @@ def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string
 # ocupar la posición inicial para calcular la consentracion de jugadores respecto al area de cada caudrante
 ## en concentracion poner un if si el area del cuadrante es 0 -- ZeroDivisionError o simplemente skipearlo
 
+
 ##Esta es mi idea de como podria funcionar el bot al estar en los bordes
 ##Las siguientes funciones hacen lo mismo tecnicamente, X0 se refiere a disparos verticales e
 ##Y0 se refiere a disparos horizontales, se difencian en signos dentro de los choice, por eso
@@ -336,6 +353,8 @@ def bordes(amenaza,Tablero,cuadrante):
                 disparo_x,disparo_y = disp_Y0_derecha(cercania1,cernacia2_3,cercania4_5)
                 #se dispara hacia la derecha en caso de que hayan mas enemigos en el cuarto cuadrante
         
+
     return disparo_x,disparo_y
+
 
 
