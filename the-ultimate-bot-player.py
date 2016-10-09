@@ -62,17 +62,11 @@ def escoger_disparo( amenazas ):
     elif c4 != "0" and (c1 == c2 == c2 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "4") 
     elif (0 in posicionActual) or ((Tablero-1) in posicionActual):
-        disparo_x,disparo_y = bordes(amenaza,Tablero,cuadrante) #La funcion bordes esta en proceso, la subo para que me corrijan si falle
-        #dejare las funciones que utiliza mas abajo, luego de las indicaciones que anotamos
-    
+        disparo_x,disparo_y = bordes(amenaza,Tablero,cuadrante) #La funcion bordes terminada
     elif (c1 != "0") and (c2 != "0") and (c3 != "0") and (c4 != "0"):
         cuadrante_int = map(int, cuadrante)
         max_cuadrante = max(cuadrante_int)
-
-
-
-
-
+    
     return disparo_x + "," + disparo_y
 
 def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amenzas ordenadas, hecho para no poner todo esto en la funcion escoger_disparo
@@ -252,3 +246,46 @@ def bordes(amenaza,Tablero,cuadrante):
                 #se dispara hacia la derecha en caso de que hayan mas enemigos en el cuarto cuadrante
         
         return disparo_x,disparo_y
+            
+    elif posicionActual[0] == (Tablero-1): #Lado derecho del tablero
+        if posicionActual[1] == 0:#Esquina superior derecha
+            if c2 != 0:
+                disparo_x,disparo_y = disp_Y0_izquierda(cercania1,cernacia2_3,cercania4_5)
+            else:
+                disparo_x,disparo_y = disp_X0_abajo(cercania1,cernacia2_3,cercania4_5)
+                
+        elif posicionActual[1] == (Tablero-1):
+            if c1 != 0:
+                disparo_x,disparo_y = disp_X0_arriba(cercania1,cernacia2_3,cercania4_5)
+            else:
+                disparo_x,disparo_y = disparo_Y0_izquierda(cercania1,cernacia2_3,cercania4_5)
+
+        else:
+            if c1 != 0:
+                disparo_x,disparo_y = disp_X0_arriba(cercania1,cernacia2_3,cercania4_5)
+            elif c2 > c3:
+                disparo_x,disparo_y = disp_Y0_izquierda(cercania1,cernacia2_3,cercania4_5)
+            else:
+                disparo_x,disparo_y = disp_X0_abajo(cercania1,cernacia2_3,cercania4_5)
+
+        return disparo_x,disparo_y
+    
+    elif posicionActual[1] == 0:
+        if c2 != 0:
+            disparo_x,disparo_y = disp_Y0_izquierda(cercania1,cernacia2_3,cercania4_5)
+        elif c3 > c4:
+            disparo_x,disparo_y = disp_X0_abajo(cercania1,cernacia2_3,cercania4_5)
+        else:
+            disparo_x,disparo_y = disp_Y0_derecha(cercania1,cernacia2_3,cercania4_5)
+
+        return disparo_x,disparo_y
+    elif posicionActual[1] == (Tablero-1):
+        if c4 != 0:
+            disparo_x,disparo_y = disp_Y0_derecha(cercania1,cernacia2_3,cercania4_5)
+        elif c2 > c1:
+            disparo_x,disparo_y = disp_Y0_izquierda(cercania1,cernacia2_3,cercania4_5)
+        else:
+            disparo_x,disparo_y = disp_X0_arriba(cercania1,cernacia2_3,cercania4_5)
+
+        return disparo_x,disparo_y
+            
