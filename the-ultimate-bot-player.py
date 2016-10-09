@@ -31,7 +31,7 @@ def escoger_movimiento( amenazas ):
     movimiento_y = ""
     global posicionActual = [global posicionActual[0]+ int(movimiento_x), global posicionActual[1]+ int(movimiento_y)] # No estoy seguro si el orden x,y está bien puesto
     global posicionActual = periodico(global posicionActual) 
-return movimiento_x + "," + movimiento_y
+    return movimiento_x + "," + movimiento_y
 
 def escoger_disparo( amenazas ):
     ambos = ambos.strip().split(':')
@@ -51,6 +51,11 @@ def escoger_disparo( amenazas ):
         disparo_x, disparo_y = disparo_seguro(amenaza, "3")
     elif c4 != "0" and (c1 == c2 == c2 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "4")
+    elif len(amenaza) == 0:
+        disparo_x, disparo_y = "0", "1" # R.I.P
+    elif (c1 != "0") and (c2 != "0") and (c3 != "0") and (c4 != "0"):
+        cuadrante_int = map(int, cuadrante)
+        max_cuadrante = max(cuadrante_int)
 
 
 
@@ -70,8 +75,9 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 elif amenaza[c] == "2":
                     disparo_x = random.choice("2", "3")
                     break
-                else:
-                    disparo_x = "1"
+            elif amenaza[c] == "3":
+                disparo_x = "1"
+                break    
             else:
                 c += 1  
     elif cuadrante == "2": # Todos los enemigos estan en cuadrante 2
@@ -84,9 +90,10 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 elif amenaza[c] == "2":
                     disparo_y = ranodm.choice("-3", "-2")
                     break
-                else:
-                    disparo_y = "-1"
-                    break
+            elif amenaza[c] == "3":
+                disparo_y = "-1"
+                break
+                    
             else:
                 c +=1   
     elif cuadrante == "3": # Todos los enemigos estan en cuadrante 3
@@ -99,12 +106,12 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 elif amenaza[c] == "2":
                     disparo_x = random.choice("-3", "-2")
                     break
-                else:
-                    disparo_x = "-1"
-                    break
+            elif amenaza[c] == "3":
+                disparo_x = "-1"
+                break
             else:
                 c += 1
-    else:
+    else: #Todos los enemigos estan en cuadrante 4
         while count < len(amenaza):
             if amenaza[c] == amenaza[c+1]:
                 disparo_x = "0"
@@ -114,9 +121,10 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 elif amenaza[c] == "2":
                     disparo_y = random.choice("2", "3")
                     break
-                else:
-                    disparo_y = "1"
-                    break
+            elif amenaza[c] == "3":
+                disparo_y = "1"
+                break
+                    
             else:
                 c += 1
     return disparo_x, disparo_y         
@@ -127,8 +135,7 @@ def periodico(coordenada): #Evita que la posicion que guardamos se "salga" del t
      if coordenada[1] >= Tamanno:
         coordenada[1] = coordenada[1] - Tamanno
     return [coordenada[0], coordenada[1]] 
-def disparar(amenaza, cuadrante):
-# funcion para disparos no 100% real    
+def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string, cuadrante con mas enemigos int)  
 
 
 #Si la posicion es 0 o 9 estamos en una esquina
