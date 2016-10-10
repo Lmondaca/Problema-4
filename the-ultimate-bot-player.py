@@ -107,7 +107,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                 c += 1  
     elif cuadrante == "2": # Todos los enemigos estan en cuadrante 2
         while c < len(amenaza):
-            if amenaza[c] == amenaza[c+1]:
+            if amenaza[c] == amenaza[c+1]: #Me acabo de dar cuenta que esto va a tirar index error tambien, hay que cambiar el [c+1]
                 disparo_x = "0"
                 if amenaza[c] == "1":
                     disparo_y = random.choice(["-4", "-5"])
