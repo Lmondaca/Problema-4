@@ -47,7 +47,7 @@ def escoger_disparo( amenazas ):
         Tablero = 15 #Va del 0 al 14
     else:
         Tablero = 20 #Va del 0 al 19
-
+    del amenaza[0] #Lo borre sin querer
     amenaza.sort()
     c1 = cuadrante[0] #Cuadrantes en valores individuales 
     c2 = cuadrante[1]
