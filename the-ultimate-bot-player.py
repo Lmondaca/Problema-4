@@ -1,6 +1,7 @@
 # coding=iso-8859-1 
 import numpy
 import random
+
 def escoger_movimiento( amenazas ):
     grados,cuadrantes=amenazas.strip().split(':')
     grados=grados.split('-') #el primer elemento es 'a'
@@ -23,8 +24,8 @@ def escoger_movimiento( amenazas ):
         if cuadrantes[2]<cuadrantes[3]:
         
     if minc == cuadrantes[2]:
-        if cuadrantes[3]< cuadrantes[0]
-        movimiento_y='1'
+        if cuadrantes[3]< cuadrantes[0]:
+            movimiento_y='1'
     elif minc ==cuadrantes[1]:
         movimiento_x='-1'
     elif minc==cuadrantes[2]:
@@ -32,9 +33,6 @@ def escoger_movimiento( amenazas ):
     elif minc==cuadrantes[3]:
         movimiento_x='1'
     
-    
-    movimiento_x = ""
-    movimiento_y = ""
     
     return movimiento_x + "," + movimiento_y
 
@@ -66,40 +64,45 @@ def escoger_disparo( amenazas ):
     elif c3 != "0" and (c1 == c2 == c4 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "3")
     elif c4 != "0" and (c1 == c2 == c2 == "0"):
-        disparo_x, disparo_y = disparo_seguro(amenaza, "4") 
-    
+        disparo_x, disparo_y = disparo_seguro(amenaza, "4")     
     elif (c1 != "0") and (c2 != "0") and (c3 != "0") and (c4 != "0"):
-        cuadrante_int = map(int, cuadrante)
-        max_cuadrante = max(cuadrante_int)
-        disparo_x,disparo_y = disparar(amenaza,max_cuadrante) #Creo que esto debia ir aca
+        disparo_x,disparo_y = disparar(amenaza,cuadrante) 
         
     return disparo_x + "," + disparo_y
 
 def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amenzas ordenadas, hecho para no poner todo esto en la funcion escoger_disparo
-
-    count = 0
-
+    #am1 = amenaza.count('1')
+    #am2 = amenaza.count('2')   Idea de respaldo en caso de que no funcione lo otro por index error.
+    #am3 = amenaza.count('3')
     c = 0 #No existia la variable
-    ## REVISAR EN CASO DE QUE AMENAZAS NO SE REPITAN
     if cuadrante == "1": # Todos los enemigos estan en cuadrante 1
-        while c < len(amenaza):
-            if amenaza[c] == amenaza[c+1]:
+        while c < (len(amenaza)-1): #No se si esto evite el problema de index, o pongo por si acaso
+            if amenaza[c] == amenaza[c+1]:#Esto va a tirar index error, hay que cambiar el [c+1]
                 disparo_y = "0"
                 if amenaza[c] == "1":
-                    disparo_x = random.choice(["4", "5"])
+                    disparo_x = random.choice(["-4", "-5"])
                     break
                 elif amenaza[c] == "2":
-                    disparo_x = random.choice(["2", "3"])
+                    disparo_x = random.choice(["-2", "-3"])
                     break
             elif amenaza[c] == "3":
-                disparo_x = "1"
+                disparo_x = "-1"
+                disparo_y = '0'
                 break    
             else:
                 c += 1  
+            #if disparo_x == '':              ##Parte de la idea de respaldo##
+                #if int(am1) >= int(am2) and int(am1)>=int(am3):
+                    #disparo_x = random.choice(["4", "5"])
+            #elif int(am2)>=int(am1) and int(am2)>=int(am3):
+                #disparo_x = random.choice(["2", "3"])
+            #else:
+                #disparo_x = '1'
+                #disparo_y = '0'
                 
     elif cuadrante == "2": # Todos los enemigos estan en cuadrante 2
-        while c < len(amenaza):
-            if amenaza[c] == amenaza[c+1]: #Me acabo de dar cuenta que esto va a tirar index error tambien, hay que cambiar el [c+1]
+        while c < (len(amenaza)-1):
+            if amenaza[c] == amenaza[c+1]:
                 disparo_x = "0"
                 if amenaza[c] == "1":
                     disparo_y = random.choice(["-4", "-5"])
@@ -109,27 +112,29 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break
             elif amenaza[c] == "3":
                 disparo_y = "-1"
+                disparo_x = '0'
                 break                 
             else:
                 c +=1  
                 
     elif cuadrante == "3": # Todos los enemigos estan en cuadrante 3
-        while c < len(amenaza):
+        while c < (len(amenaza)-1):
             if amenaza[c] == amenaza[c+1]:
                 disparo_y = "0"
                 if amenaza[c] == "1":
-                    disparo_x = random.choice(["-4", "-5"])
+                    disparo_x = random.choice(["4", "5"])
                     break
                 elif amenaza[c] == "2":
-                    disparo_x = random.choice(["-3", "-2"])
+                    disparo_x = random.choice(["3", "2"])
                     break
             elif amenaza[c] == "3":
-                disparo_x = "-1"
+                disparo_x = "1"
+                disparo_y = '0'
                 break
             else:
                 c += 1
     else: #Todos los enemigos estan en cuadrante 4
-        while c < len(amenaza):
+        while c < (len(amenaza)-1):
             if amenaza[c] == amenaza[c+1]:
                 disparo_x = "0"
                 if amenaza[c] == "1":
@@ -140,76 +145,131 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break
             elif amenaza[c] == "3":
                 disparo_y = "1"
+                disparo_x = '0'
                 break                    
             else:
                 c += 1
                 
     return disparo_x, disparo_y
-     
-def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string, cuadrante con mas enemigos int)  
-    cuenta = 0
-    amenaza_1 = 0
-    amenaza_2 = 0
-    while cuenta <= len(amenaza):
-        if   amenaza[cuenta] == '1':
-            amenaza_1 += 1
-            cuenta += 1
-        elif amenaza[cuenta] == '2':
-            amenaza_2 += 1
-            cuenta += 1
-        
-    if 3 in amenaza:
-        if cuadrante == 1:
-            disparo_x = "1"
-            disparo_y = "0"
-            return disparo_x, disparo_y
-        elif cuadrante == 2:
-            disparo_x = "0"
-            disparo_y = "-1"
-            return disparo_x, disparo_y
-        elif cuadrante == 3:
-            disparo_x = "-1"
-            disparo_y = "0"
-            return disparo_x, disparo_y
+
+def disparar(amenaza, cuadrante):
+    c1 = int(cuadrante[0])
+    c2 = int(cuadrante[1])
+    c3 = int(cuadrante[2])
+    c4 = int(cuadrante[3])
+    am1 = amenazas.count('1')
+    am2 = amenazas.count('2')
+    if '3' in amenaza:
+        if c1 > c2 and c1>c3 and c1>c4:
+            disparo_x = '-1'
+            disparo_y = '0'
+        elif c2 > c1 and c2 > c3 and c2 > c4:
+            disparo_x = '0'
+            disparo_y = '-1'
+        elif c3>c1 and c3>c2 and c3>c4:
+            disparo_x = '1'
+            disparo_y = '0'
         else:
-            disparo_x = "0"
-            disparo_y = "1"
-            return disparo_x, disparo_y
-    elif amenaza_2 >= amenaza_1:
-        if   cuadrante == 1:
-            disparo_x = random.choice(["3", "2"])
-            disparo_y = "0"
-            return disparo_x, disparo_y
-        elif cuadrante == 2:
-            disparo_x = "0"
-            disparo_y = random.choice(["-2", "-3"])
-            return disparo_x, disparo_y
-        elif cuadrante == 3:
-            disparo_x = random.choice(["-2", "-3"])
-            disparo_y = "0"
-            return disparo_x, disparo_y
+            disapro_x = '0'
+            disparo_y = '1'
+        return disparo_x,disparo_y
+    elif am2 > am1:
+        if c1 > c2 and c1>c3 and c1>c4:
+            disparo_x = random.choice(['-2','-3'])
+            disparo_y = '0'
+        elif c2 > c1 and c2 > c3 and c2 > c4:
+            disparo_x = '0'
+            disparo_y = random.choice(['-2','-3'])
+        elif c3>c1 and c3>c2 and c3>c4:
+            disparo_x = random.choice(['2','3'])
+            disparo_y = '0'
         else:
-            disparo_x = "0"
-            disparo_y = random.choice(["2", "3"])
-            return disparo_x, disparo_y
+            disapro_x = '0'
+            disparo_y = random.choice(['-2','-3'])
+        return disparo_x,disparo_y
     else:
-        if   cuadrante == 1:
-            disparo_x = random.choice(["5", "4"])
-            disparo_y = "0"
-            return disparo_x, disparo_y
-        elif cuadrante == 2:
-            disparo_x = "0"
-            disparo_y = random.choice(["-5", "-4"])
-            return disparo_x, disparo_y
-        elif cuadrante == 3:
-            disparo_x = random.choice(["-5", "-4"])
-            disparo_y = "0"
-            return disparo_x, disparo_y
+        if c1 > c2 and c1>c3 and c1>c4:
+            disparo_x = random.choice(['-4','-5'])
+            disparo_y = '0'
+        elif c2 > c1 and c2 > c3 and c2 > c4:
+            disparo_x = '0'
+            disparo_y = random.choice(['-4','-5'])
+        elif c3>c1 and c3>c2 and c3>c4:
+            disparo_x = random.choice(['4','5'])
+            disparo_y = '0'
         else:
-            disparo_x = "0"
-            disparo_y = random.choice(["5", "4"])
-            return disparo_x, disparo_y
+            disapro_x = '0'
+            disparo_y = random.choice(['4','5'])
+        return disparo_x,disparo_y
+    
+##def disparar(amenaza, cuadrante): ##Deje comentado esto, la verdad no estoy seguro de como funcionaba, por eso lo deje asi##
+##    cuenta = 0
+##    amenaza_1 = 0
+##    amenaza_2 = 0
+##    while cuenta <= len(amenaza):
+##        if   amenaza[cuenta] == '1':
+##            amenaza_1 += 1
+##            cuenta += 1
+##        elif amenaza[cuenta] == '2':
+##            amenaza_2 += 1
+##            cuenta += 1
+##        
+##    if 3 in amenaza:
+##        if cuadrante == 1:
+##            disparo_x = "1"
+##            disparo_y = "0"
+##            return disparo_x, disparo_y
+##        elif cuadrante == 2:
+##            disparo_x = "0"
+##            disparo_y = "-1"
+##            return disparo_x, disparo_y
+##        elif cuadrante == 3:
+##            disparo_x = "-1"
+##            disparo_y = "0"
+##            return disparo_x, disparo_y
+##        else:
+##            disparo_x = "0"
+##            disparo_y = "1"
+##            return disparo_x, disparo_y
+##    elif amenaza_2 >= amenaza_1:
+##        if   cuadrante == 1:
+##            disparo_x = random.choice(["3", "2"])
+##            disparo_y = "0"
+##            return disparo_x, disparo_y
+##        elif cuadrante == 2:
+##            disparo_x = "0"
+##            disparo_y = random.choice(["-2", "-3"])
+##            return disparo_x, disparo_y
+##        elif cuadrante == 3:
+##            disparo_x = random.choice(["-2", "-3"])
+##            disparo_y = "0"
+##            return disparo_x, disparo_y
+##        else:
+##            disparo_x = "0"
+##            disparo_y = random.choice(["2", "3"])
+##            return disparo_x, disparo_y
+##    else:
+##        if   cuadrante == 1:
+##            disparo_x = random.choice(["5", "4"])
+##            disparo_y = "0"
+##            return disparo_x, disparo_y
+##        elif cuadrante == 2:
+##            disparo_x = "0"
+##            disparo_y = random.choice(["-5", "-4"])
+##            return disparo_x, disparo_y
+##        elif cuadrante == 3:
+##            disparo_x = random.choice(["-5", "-4"])
+##            disparo_y = "0"
+##            return disparo_x, disparo_y
+##        else:
+##            disparo_x = "0"
+##            disparo_y = random.choice(["5", "4"])
+##            return disparo_x, disparo_y
+
 
 
             
 
+            
+        
+         
