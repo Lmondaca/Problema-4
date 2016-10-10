@@ -80,7 +80,7 @@ def escoger_disparo( amenazas ):
     elif (c1 != "0") and (c2 != "0") and (c3 != "0") and (c4 != "0"):
         cuadrante_int = map(int, cuadrante)
         max_cuadrante = max(cuadrante_int)
-    
+    ##que hace esto??
     return disparo_x + "," + disparo_y
 
 def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amenzas ordenadas, hecho para no poner todo esto en la funcion escoger_disparo
