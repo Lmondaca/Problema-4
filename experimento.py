@@ -11,7 +11,7 @@ def escoger_movimiento( amenazas ):
     del grados[0]
     grados.sort()
     am1 = grados.count('1')
-    am2 = grados.count('2')   Idea de respaldo en caso de que no funcione lo otro por index error.
+    am2 = grados.count('2')   
     am3 = grados.count('3')
     #num_Jugadores = sum(cuadrantes)+1 #Calcula el numero de jugadores para determianr el tamanio del tablero
     #if num_Jugadores <= 5:
