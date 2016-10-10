@@ -168,10 +168,10 @@ def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string
     amenaza_1 = 0
     amenaza_2 = 0
     while cuenta <= len(amenaza):
-        if   amenaza[cuenta] == 1:
+        if   amenaza[cuenta] == '1':
             amenaza_1 += 1
             cuenta += 1
-        elif amenaza[cuenta] == 2:
+        elif amenaza[cuenta] == '2':
             amenaza_2 += 1
             cuenta += 1
         
