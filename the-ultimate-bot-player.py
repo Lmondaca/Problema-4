@@ -10,6 +10,15 @@ def escoger_movimiento( amenazas ):
     cuadrantes=cuadrantes.split('-')
     cuadrantes=map(int, cuadrantes)
     minc=min(cuadrantes)
+    num_Jugadores = sum(cuadrantes)+1 #Calcula el numero de jugadores para determianr el tamanio del tablero
+    if num_Jugadores <= 5:
+        Tablero = 11 #Va del 0 al 10
+    elif num_Jugadores <= 10:
+        Tablero = 15 #Va del 0 al 14
+    else:
+        Tablero = 20 #Va del 0 al 19
+
+
     if minc == cuadrantes[0]:
         if cuadrantes[1]<cuadrantes[2] and cuadrantes[1]<=cuadrantes[0]:
 
@@ -30,7 +39,8 @@ def escoger_movimiento( amenazas ):
     movimiento_x = ""
     movimiento_y = ""
     global posicionActual = [global posicionActual[0]+ int(movimiento_x), global posicionActual[1]+ int(movimiento_y)] # No estoy seguro si el orden x,y está bien puesto
-    global posicionActual = periodico(global posicionActual) 
+    global posicionActual = periodico(global posicionActual, Tablero)
+
     return movimiento_x + "," + movimiento_y
 
 def escoger_disparo( amenazas ):
@@ -45,6 +55,7 @@ def escoger_disparo( amenazas ):
         Tablero = 15 #Va del 0 al 14
     else:
         Tablero = 20 #Va del 0 al 19
+
     amenaza.sort()
     c1 = cuadrante[0] #Cuadrantes en valores individuales 
     c2 = cuadrante[1]
@@ -54,6 +65,7 @@ def escoger_disparo( amenazas ):
     if len(amenaza) == 0:  #Cambio en el orden, si no hay amenazas no es necesario ver todo lo siguiente
         disparo_x, disparo_y = "0", "1" # R.I.P
     elif c1 != "0" and (c2 == c3 == c4 == "0"):
+
         disparo_x, disparo_y = disparo_seguro(amenaza, "1")
     elif c2 != "0" and (c1 == c3 == c4 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "2")
@@ -63,6 +75,7 @@ def escoger_disparo( amenazas ):
         disparo_x, disparo_y = disparo_seguro(amenaza, "4") 
     elif (0 in posicionActual) or ((Tablero-1) in posicionActual):
         disparo_x,disparo_y = bordes(amenaza,Tablero,cuadrante) #La funcion bordes terminada
+
     elif (c1 != "0") and (c2 != "0") and (c3 != "0") and (c4 != "0"):
         cuadrante_int = map(int, cuadrante)
         max_cuadrante = max(cuadrante_int)
@@ -70,11 +83,13 @@ def escoger_disparo( amenazas ):
     return disparo_x + "," + disparo_y
 
 def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amenzas ordenadas, hecho para no poner todo esto en la funcion escoger_disparo
+
     count = 0
+
     c = 0 #No existia la variable
     ## REVISAR EN CASO DE QUE AMENAZAS NO SE REPITAN
     if cuadrante == "1": # Todos los enemigos estan en cuadrante 1
-        while count < len(amenaza):
+        while c < len(amenaza):
             if amenaza[c] == amenaza[c+1]:
                 disparo_y = "0"
                 if amenaza[c] == "1":
@@ -82,6 +97,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break
                 elif amenaza[c] == "2":
                     disparo_x = random.choice(["2", "3"])
+
                     break
             elif amenaza[c] == "3":
                 disparo_x = "1"
@@ -89,7 +105,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
             else:
                 c += 1  
     elif cuadrante == "2": # Todos los enemigos estan en cuadrante 2
-        while count < len(amenaza):
+        while c < len(amenaza):
             if amenaza[c] == amenaza[c+1]:
                 disparo_x = "0"
                 if amenaza[c] == "1":
@@ -97,6 +113,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break
                 elif amenaza[c] == "2":
                     disparo_y = ranodm.choice(["-3", "-2"])
+
                     break
             elif amenaza[c] == "3":
                 disparo_y = "-1"
@@ -105,7 +122,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
             else:
                 c +=1   
     elif cuadrante == "3": # Todos los enemigos estan en cuadrante 3
-        while count < len(amenaza):
+        while c < len(amenaza):
             if amenaza[c] == amenaza[c+1]:
                 disparo_y = "0"
                 if amenaza[c] == "1":
@@ -113,6 +130,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break
                 elif amenaza[c] == "2":
                     disparo_x = random.choice(["-3", "-2"])
+
                     break
             elif amenaza[c] == "3":
                 disparo_x = "-1"
@@ -120,7 +138,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
             else:
                 c += 1
     else: #Todos los enemigos estan en cuadrante 4
-        while count < len(amenaza):
+        while c < len(amenaza):
             if amenaza[c] == amenaza[c+1]:
                 disparo_x = "0"
                 if amenaza[c] == "1":
@@ -128,6 +146,7 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     break 
                 elif amenaza[c] == "2":
                     disparo_y = random.choice(["2", "3"])
+
                     break
             elif amenaza[c] == "3":
                 disparo_y = "1"
@@ -135,15 +154,78 @@ def disparo_seguro(amenaza, cuadrante): # Recibe el cuadrante y la lista de amen
                     
             else:
                 c += 1
-    return disparo_x, disparo_y         
-def periodico(coordenada): #Evita que la posicion que guardamos se "salga" del tablero, se le da una lista
-    Tamanno = 5 #Se asume que el tamaño del tablero es de 5 pues es 1v1 cambiar para gran final, si no es 1v1 preguntar a los ayudantes
-     if coordenada[0] >= Tamanno:
-        coordenada[0] = coordenada[0] - Tamanno
-     if coordenada[1] >= Tamanno:
-        coordenada[1] = coordenada[1] - Tamanno
-    return [coordenada[0], coordenada[1]] 
+    return disparo_x, disparo_y
+def periodico(coordenada, Tamanno): #Evita que la posicion que guardamos se "salga" del tablero, se le da una lista
+    if coordenada[0] >= Tamanno:
+        coordenada[0] = Tamanno - coordenada[0]
+    if coordenada[1] >= Tamanno:
+        coordenada[1] = Tamanno - coordenada[1]
+    return [coordenada[0], coordenada[1]]
+     
 def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string, cuadrante con mas enemigos int)  
+    cuenta = 0
+    amenaza_1 = 0
+    amenaza_2 = 0
+    while cuenta <= len(amenaza):
+        if   amenaza[cuenta] == 1:
+            amenaza_1 += 1
+            cuenta += 1
+        elif amenaza[cuenta] == 2:
+            amenaza_2 += 1
+            cuenta += 1
+        
+    if 3 in amenaza:
+        if cuadrante == 1:
+            disparo_x = "1"
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        elif cuadrante == 2:
+            disparo_x = "0"
+            disparo_y = "-1"
+            return disparo_x, disparo_y
+        elif cuadrante == 3:
+            disparo_x = "-1"
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        else:
+            disparo_x = "0"
+            disparo_y = "1"
+            return disparo_x, disparo_y
+    elif amenaza_2 >= amenaza_1:
+        if   cuadrante == 1:
+            disparo_x = random.choice("3", "2")
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        elif cuadrante == 2:
+            disparo_x = "0"
+            disparo_y = random.choice("-2", "-3")
+            return disparo_x, disparo_y
+        elif cuadrante == 3:
+            disparo_x = random.choice("-2", "-3")
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        else:
+            disparo_x = "0"
+            disparo_y = random.choice("2", "3")
+            return disparo_x, disparo_y
+    else:
+        if   cuadrante == 1:
+            disparo_x = random.choice("5", "4")
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        elif cuadrante == 2:
+            disparo_x = "0"
+            disparo_y = random.choice("-5", "-4")
+            return disparo_x, disparo_y
+        elif cuadrante == 3:
+            disparo_x = random.choice("-5", "-4")
+            disparo_y = "0"
+            return disparo_x, disparo_y
+        else:
+            disparo_x = "0"
+            disparo_y = random.choice("5", "4")
+            return disparo_x, disparo_y
+
 
 
 #Si la posicion es 0 o 9 estamos en una esquina
@@ -289,3 +371,4 @@ def bordes(amenaza,Tablero,cuadrante):
 
         return disparo_x,disparo_y
             
+
