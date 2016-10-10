@@ -63,7 +63,141 @@ def escoger_movimiento( amenazas ):
                 if am2>=am3:
                     movimiento_x="-1"
                 else:
-                    movimiento_x="-3" 
+                    movimiento_x="-3"
+    elif minc == cuadrantes[1]:
+        if maxc == cuadrantes[0]:
+            movimiento_x="0"
+            if am3 == 0:
+                movimiento_y="-1"
+            elif am2 == 0:
+                if am1>=am3:
+                    movimiento_y="-2"
+                else:
+                    movimiento_y="-3"
+            else:
+                if am2>= am3:
+                    movimiento_y="-1"
+                else:
+                    movimiento_y="-3"
+        elif maxc == cuadrantes[2]:
+            movimiento_x="0"
+            if am3 == 0:
+                movimiento_y="1"
+            elif am2 == 0:
+                if am1>= am3:
+                    movimiento_y="2"
+                else:
+                    movimiento_y="3"
+            else:
+                if am2>= am3:
+                    movimiento_y="1"
+                else:
+                    movimiento_y="3"
+        elif maxc == cuadrantes[3]
+            movimiento_y="0"
+            if am3 == 0:
+                movimiento_x="-1"
+            elif am2 == 0:
+                if am1>= am3:
+                    movimiento_x="-2"
+                else:
+                    movimiento_x="-3"
+            else:
+                if am2>= am3:
+                    movimiento_x="-1"
+                else:
+                    movimiento_x="-3"
+    elif minc == cuadrantes[2]:
+        if maxc == cuadrantes[0]:
+            movimiento_x="0"
+            if am3== 0:
+                movimiento_y="-1"
+            elif am2== 0:
+                if am1>=am3:
+                    movimiento_y="-1"
+                else:
+                    movimiento_y="-3"
+            else:
+                if am2>= am3:
+                    movimiento_y="-1"
+                else:
+                    movimiento_y="-3"
+        elif maxc == cuadrantes[1]:
+            movimiento_y="0"
+            if am3 == 0:
+                movimiento_x="1"
+            elif am2 == 0:
+                if am1>= am3:
+                    movimiento_x="2"
+                else:
+                    movimiento_x="3"
+            else:
+                if am3>= am2:
+                    movimiento_x="3"
+                else:
+                    movimiento_x="1"
+        else:
+            movimiento_y="0"
+            if am3 == 0:
+                movimiento_x="-1"
+            elif am2 == 0:
+                if am1>= am3:
+                    movimiento_x="-2"
+                else:
+                    movimiento_x="-3"
+            else:
+                if am3>= am2:
+                    movimiento_x="-3"
+                else:
+                    movimiento_x="-1"
+    elif minc == cuadrantes[3]:
+        if maxc == cuadrantes[0]:
+            movimiento_x="0"
+            if am3 == 0:
+                movimiento_y="-1"
+            elif am2 ==0:
+                if am3>=am1:
+                    movimiento_y="-3"
+                else:
+                    movimiento_y="-2"
+            else:
+                if am3>= am2:
+                    movimiento_y="-3"
+                else:
+                    movimiento_y="-1"
+        elif maxc == cuadrantes[1]:
+            movimiento_y="0"
+            if am3 == 0:
+                movimiento_x="1"
+            elif am2 == 0:
+                if am3>= am1:
+                    movimiento_x="3"
+                else:
+                    movimiento_x="2"
+            else:
+                if am3>= am2:
+                    movimiento_x="3"
+                else:
+                    movimiento_x="1"
+        else:
+            movimiento_x="0"
+            if am3 == 0:
+                movimiento_y="1"
+            elif am2 == 0:
+                if am3>= am1:
+                    movimiento_y="3"
+                else:
+                    movimiento_y="2"
+            else:
+                if am3>= am2:
+                    movimiento_y="3"
+                else:
+                    movimiento_y="1"
+        
+
+
+
+
 #La idea seria hacer algo similar cuando min cuadranes tomas los otros 3 valores o al menos eso se me ocurre a mi
 # creo que si lees el esta parte con la imagen de cuadrantes al lado podria ser mas facil de entender            
     elif minc == cuadrantes[1]:
