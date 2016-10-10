@@ -7,45 +7,66 @@ def escoger_movimiento( amenazas ):
     grados=grados.split('-') #el primer elemento es 'a'
     cuadrantes=cuadrantes.split('-')
     cuadrantes=map(int, cuadrantes)
-    minc=min(cuadrantes)
-    num_Jugadores = sum(cuadrantes)+1 #Calcula el numero de jugadores para determianr el tamanio del tablero
-    if num_Jugadores <= 5:
-        Tablero = 11 #Va del 0 al 10
-    elif num_Jugadores <= 10:
-        Tablero = 15 #Va del 0 al 14
+    c1 = cuadrantes[0]
+    c2 = cuadrantes[1]
+    c3 = cuadrantes[2]
+    c4 = cuadrantes[3]
+    am2 = grados.count('2')
+    minC = min(cuadrantes)
+    maxC = max(cuadrantes)
+    movimiento_x, movimiento_y = '0', '0'
+    if '3' in grados:
+        if 0 in cuadrantes:
+            if c1 == 0:
+                movimiento_x = random.choice(['-2','-3'])
+            elif c2 == 0:
+                movimiento_y = random.choice(['-2','-3'])
+            elif c3 == 0:
+                movimiento_x = random.choice(['2','3'])
+            else:
+                movimiento_y = random.choice(['2','3'])
+        elif minC == c1:
+            movimiento_x = random.choice(['-2','-3'])
+        elif minC == c2:
+            movimiento_y = random.choice(['-2','-3'])
+        elif minC == c3:
+            movimiento_x = random.choice(['2','3'])
+        else:
+            movimiento_y = random.choice(['2','3'])
+    elif '3' not in grados and am2 == 0:
+        if c1 == maxC and c2 == minC:
+            movimiento_y = random.choice(['1','2','3'])
+        elif c1 == maxC and c3 == minC:
+            movimiento_x = random.choice(['1','2','3'])
+        elif c2 == maxC and c3 == minC:
+            movimiento_x = random.choice(['-1','-2','-3'])
+        elif c3 == maxC and c4 == minC:
+            movimiento_y = random.choice(['-1','-2','-3'])
+        else:
+            movimiento_x = random.choice(['2','3'])
     else:
-        Tablero = 20 #Va del 0 al 19
+        if c1 == maxC:
+            movimiento_x = '-1'
+        elif c2 == maxC:
+            movimiento_y = '-1'
+        elif c3 == maxC:
+            movimiento_x = '1'
+        else:
+            movimiento_y = '1'
 
-    if minc == cuadrantes[0]:
-        if cuadrantes[1]<cuadrantes[2] and cuadrantes[1]<=cuadrantes[0]:
 
-    if minc == cuadrantes[1]:
-        if cuadrantes[2]<cuadrantes[3]:
-        
-    if minc == cuadrantes[2]:
-        if cuadrantes[3]< cuadrantes[0]:
-            movimiento_y='1'
-    elif minc ==cuadrantes[1]:
-        movimiento_x='-1'
-    elif minc==cuadrantes[2]:
-        movimiento_y='-1'
-    elif minc==cuadrantes[3]:
-        movimiento_x='1'
-    
-    
-    return '1' + "," + '0'
+
+    if movimiento_x == '':
+        movimiento_x = '0'
+    elif movimiento_y == '':
+        movimiento_y == '0'
+                   
+    return movimiento_x + "," + movimiento_y
 
 def escoger_disparo( amenazas ):
     ambos = amenazas.strip().split(':') #:V
     amenaza = ambos[0].strip().split('-') #Lista de amenzas [g1, g2, g3, gn]
     cuadrante = ambos[1].strip().split('-') #Lista de cuadrantes [c1, c2, c3, c4]    
-    num_Jugadores = sum(map(int,cuadrante)) #Calcula el numero de jugadores para determianr el tamanio del tablero
-    if num_Jugadores <= 5:
-        Tablero = 11 #Va del 0 al 10
-    elif num_Jugadores <= 10:
-        Tablero = 15 #Va del 0 al 14
-    else:
-        Tablero = 20 #Va del 0 al 19
     del amenaza[0]
     amenaza.sort()
     c1 = cuadrante[0] #Cuadrantes en valores individuales 
@@ -127,30 +148,31 @@ def disparar(amenaza, cuadrante):
     c2 = int(cuadrante[1])
     c3 = int(cuadrante[2])
     c4 = int(cuadrante[3])
-    am1 = amenazas.count('1')
-    am2 = amenazas.count('2')
+    am1 = amenaza.count('1')
+    am2 = amenaza.count('2')
     if '3' in amenaza:
-        if c1 > c2 and c1>c3 and c1>c4:
+        if c1 >= c2 and c1 >= c3 and c1 >= c4:
             disparo_x = '-1'
             disparo_y = '0'
-        elif c2 > c1 and c2 > c3 and c2 > c4:
+        elif c2 >= c1 and c2 >= c3 and c2 >= c4:
             disparo_x = '0'
             disparo_y = '-1'
-        elif c3>c1 and c3>c2 and c3>c4:
+        elif c3 >= c1 and c3 >= c2 and c3 >= c4:
             disparo_x = '1'
             disparo_y = '0'
         else:
             disapro_x = '0'
             disparo_y = '1'
         return disparo_x,disparo_y
+    
     elif am2 > am1:
-        if c1 > c2 and c1>c3 and c1>c4:
+        if c1 >= c2 and c1 >= c3 and c1 >= c4:
             disparo_x = random.choice(['-2','-3'])
             disparo_y = '0'
-        elif c2 > c1 and c2 > c3 and c2 > c4:
+        elif c2 >= c1 and c2 >= c3 and c2 >= c4:
             disparo_x = '0'
             disparo_y = random.choice(['-2','-3'])
-        elif c3>c1 and c3>c2 and c3>c4:
+        elif c3 >= c1 and c3 >= c2 and c3 >= c4:
             disparo_x = random.choice(['2','3'])
             disparo_y = '0'
         else:
@@ -158,18 +180,17 @@ def disparar(amenaza, cuadrante):
             disparo_y = random.choice(['-2','-3'])
         return disparo_x,disparo_y
     else:
-        if c1 > c2 and c1>c3 and c1>c4:
+        if c1 >= c2 and c1 >= c3 and c1 >= c4:
             disparo_x = random.choice(['-4','-5'])
             disparo_y = '0'
-        elif c2 > c1 and c2 > c3 and c2 > c4:
+        elif c2 >= c1 and c2 >= c3 and c2 >= c4:
             disparo_x = '0'
             disparo_y = random.choice(['-4','-5'])
-        elif c3>c1 and c3>c2 and c3>c4:
+        elif c3 >= c1 and c3 >= c2 and c3 >= c4:
             disparo_x = random.choice(['4','5'])
             disparo_y = '0'
         else:
             disapro_x = '0'
             disparo_y = random.choice(['4','5'])
         return disparo_x,disparo_y
-        
          
