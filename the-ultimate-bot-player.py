@@ -45,7 +45,7 @@ def escoger_movimiento( amenazas ):
     return movimiento_x + "," + movimiento_y
 
 def escoger_disparo( amenazas ):
-    ambos = ambos.strip().split(':')
+    ambos = amenazas.strip().split(':') #:V
     amenaza = ambos[0].strip().split('-') #Lista de amenzas [g1, g2, g3, gn]
     cuadrante = ambos[1].strip().split('-') #Lista de cuadrantes [c1, c2, c3, c4]    
     del amenaza[0]
