@@ -1,7 +1,8 @@
+# coding=iso-8859-1 
 import numpy
 import random
 from cliente_alumnos import posicion
-global posicionActual = list(posicion) # Lista de enteros
+posicionActual = list(posicion) # Lista de enteros 
 def escoger_movimiento( amenazas ):
     global posicionActual # Usar la posicion inicial
     # inserte aqui el area de los cuadrantes o el llamada a funcion del area
@@ -38,8 +39,8 @@ def escoger_movimiento( amenazas ):
     
     movimiento_x = ""
     movimiento_y = ""
-    global posicionActual = [global posicionActual[0]+ int(movimiento_x), global posicionActual[1]+ int(movimiento_y)] # No estoy seguro si el orden x,y está bien puesto
-    global posicionActual = periodico(global posicionActual, Tablero)
+    posicionActual = [posicionActual[0]+ int(movimiento_x), posicionActual[1]+ int(movimiento_y)] # No estoy seguro si el orden x,y está bien puesto
+    posicionActual = periodico(posicionActual, Tablero)
 
     return movimiento_x + "," + movimiento_y
 
@@ -193,37 +194,37 @@ def disparar(amenaza, cuadrante): #Disparo no 100% real (lista de amenzas string
             return disparo_x, disparo_y
     elif amenaza_2 >= amenaza_1:
         if   cuadrante == 1:
-            disparo_x = random.choice("3", "2")
+            disparo_x = random.choice(["3", "2"])
             disparo_y = "0"
             return disparo_x, disparo_y
         elif cuadrante == 2:
             disparo_x = "0"
-            disparo_y = random.choice("-2", "-3")
+            disparo_y = random.choice(["-2", "-3"])
             return disparo_x, disparo_y
         elif cuadrante == 3:
-            disparo_x = random.choice("-2", "-3")
+            disparo_x = random.choice(["-2", "-3"])
             disparo_y = "0"
             return disparo_x, disparo_y
         else:
             disparo_x = "0"
-            disparo_y = random.choice("2", "3")
+            disparo_y = random.choice(["2", "3"])
             return disparo_x, disparo_y
     else:
         if   cuadrante == 1:
-            disparo_x = random.choice("5", "4")
+            disparo_x = random.choice(["5", "4"])
             disparo_y = "0"
             return disparo_x, disparo_y
         elif cuadrante == 2:
             disparo_x = "0"
-            disparo_y = random.choice("-5", "-4")
+            disparo_y = random.choice(["-5", "-4"])
             return disparo_x, disparo_y
         elif cuadrante == 3:
-            disparo_x = random.choice("-5", "-4")
+            disparo_x = random.choice(["-5", "-4"])
             disparo_y = "0"
             return disparo_x, disparo_y
         else:
             disparo_x = "0"
-            disparo_y = random.choice("5", "4")
+            disparo_y = random.choice(["5", "4"])
             return disparo_x, disparo_y
 
 
