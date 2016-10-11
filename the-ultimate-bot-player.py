@@ -193,4 +193,3 @@ def disparar(amenaza, cuadrante):
             disapro_x = '0'
             disparo_y = random.choice(['4','5'])
         return disparo_x,disparo_y
-         
