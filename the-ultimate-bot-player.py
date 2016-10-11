@@ -59,8 +59,8 @@ def escoger_movimiento( amenazas ):
     if movimiento_x == '':
         movimiento_x = '0'
     elif movimiento_y == '':
+        
         movimiento_y == '0'
-                   
     return movimiento_x + "," + movimiento_y
 
 def escoger_disparo( amenazas ):
@@ -68,6 +68,13 @@ def escoger_disparo( amenazas ):
     amenaza = ambos[0].strip().split('-') #Lista de amenzas [g1, g2, g3, gn]
     cuadrante = ambos[1].strip().split('-') #Lista de cuadrantes [c1, c2, c3, c4]    
     del amenaza[0]
+    num_Jugadores = sum(map(int,cuadrante)) #Calcula el numero de jugadores para determianr el tamanio del tablero
+    if num_Jugadores <= 5:
+        Tablero = 11 #Va del 0 al 10
+    elif num_Jugadores <= 10:
+        Tablero = 15 #Va del 0 al 14
+    else:
+        Tablero = 20 #Va del 0 al 19
     amenaza.sort()
     c1 = cuadrante[0] #Cuadrantes en valores individuales 
     c2 = cuadrante[1]
@@ -76,7 +83,6 @@ def escoger_disparo( amenazas ):
     
     if len(amenaza) == 0:  #Cambio en el orden, si no hay amenazas no es necesario ver todo lo siguiente
         disparo_x, disparo_y = "0", "1" # R.I.P
-    
     elif c1 != "0" and (c2 == c3 == c4 == "0"):
         disparo_x, disparo_y = disparo_seguro(amenaza, "1")
     elif c2 != "0" and (c1 == c3 == c4 == "0"):
