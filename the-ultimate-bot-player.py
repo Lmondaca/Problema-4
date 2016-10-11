@@ -183,7 +183,7 @@ def disparar(amenaza, cuadrante):
             disparo_y = '0'
         else:
             disapro_x = '0'
-            disparo_y = random.choice(['-2','-3'])
+            disparo_y = random.choice(['2','3'])
         return disparo_x,disparo_y
     else:
         if c1 >= c2 and c1 >= c3 and c1 >= c4:
